@@ -69,17 +69,17 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID || '',
       clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
-      callbackURL: '/auth/github/callback',
+      callbackURL: '/api/auth/github/callback',
+      scope: ['user:email'],
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        const email = profile.emails[0].value;
         const username = profile.username;
         const githubId = profile.id;
 
         // Get user based on id and email
         let user = await User.findOne({
-          $or: [{ githubId }, { email }],
+          $or: [{ githubId }],
         }).exec();
 
         if (!user) {
@@ -87,15 +87,11 @@ passport.use(
           user = await User.create({
             githubId,
             username,
-            email,
           });
         }
 
-        // Generate a JWT token
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-
         // Pass the user and token to the callback function
-        return done(null, token);
+        return done(null, user);
       } catch (error) {
         return done(error);
       }

@@ -9,7 +9,7 @@ import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 
 import apiRoutes from './routes/api.route';
-import './config/passport';
+import './config/passport.config';
 
 dotenv.config();
 
