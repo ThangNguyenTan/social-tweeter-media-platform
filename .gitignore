@@ -1,0 +1,23 @@
+# Dependency directories
+/node_modules
+/dist
+
+# Environment files
+.env
+
+# Build artifacts
+/build
+
+# Editor and IDE files
+.vscode
+.idea
+*.swp
+
+# Logs
+logs
+
+# Testing artifacts
+/coverage
+
+# Temporary files
+.tmp
