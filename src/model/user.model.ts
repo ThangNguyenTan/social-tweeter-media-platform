@@ -4,6 +4,7 @@ export interface UserDocument extends Document {
   username: string;
   password?: string;
   profileImageURL?: string;
+  profileBackgroundImageURL?: string;
   bio?: string;
   email?: string;
   googleId?: string;
@@ -15,6 +16,10 @@ const userSchema = new mongoose.Schema<UserDocument>({
   email: { type: String, unique: true },
   bio: { type: String, default: 'Go to Settings to update your bio' },
   profileImageURL: {
+    type: String,
+    default: 'https://i.imgur.com/tQGfxmT.png',
+  },
+  profileBackgroundImageURL: {
     type: String,
     default: 'https://i.imgur.com/tQGfxmT.png',
   },

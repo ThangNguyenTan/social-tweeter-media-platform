@@ -4,7 +4,6 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GithubStrategy } from 'passport-github';
 import bcrypt from 'bcrypt';
 import User from '../model/user.model';
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 dotenv.config();

@@ -10,9 +10,9 @@ export const authenticateToken = (
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.sendStatus(401);
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, user: { userId: string }) => {
     if (err) return res.sendStatus(403);
-    req.user = user;
+    req.currentUser = user;
     next();
   });
 };

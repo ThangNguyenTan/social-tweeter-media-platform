@@ -1,12 +1,17 @@
 import { Document, Schema, model } from 'mongoose';
-import { UserDocument } from './user.model';
+
+enum PublicationType {
+  Public = 'public',
+  FollowersOnly = 'followersOnly',
+}
 
 export interface Post extends Document {
   content: string;
   createdAt: Date;
   updatedAt: Date;
-  user: UserDocument['_id'];
+  user: Schema.Types.ObjectId;
   imageURL: string | null;
+  publicationType: PublicationType;
 }
 
 const postSchema = new Schema<Post>(
@@ -31,6 +36,11 @@ const postSchema = new Schema<Post>(
     imageURL: {
       type: String,
       default: null,
+    },
+    publicationType: {
+      type: String,
+      enum: Object.values(PublicationType),
+      default: PublicationType.Public,
     },
   },
   { timestamps: true },
