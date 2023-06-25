@@ -6,6 +6,7 @@ import retweetRouter from './retweet.route';
 import commentRouter from './comment.route';
 import followRouter from './follow.route';
 import likeRouter from './like.route';
+import bookmarkRouter from './bookmark.route';
 import { authenticateToken } from '../middlewares/auth.middleware';
 
 const router = express.Router();
@@ -17,5 +18,6 @@ router.use('/retweets', authenticateToken, retweetRouter);
 router.use('/comments', authenticateToken, commentRouter);
 router.use('/follows', authenticateToken, followRouter);
 router.use('/likes', authenticateToken, likeRouter);
+router.use('/bookmarks', authenticateToken, bookmarkRouter);
 
 export default router;
