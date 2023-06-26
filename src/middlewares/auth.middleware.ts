@@ -1,9 +1,10 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { IGetUserAuthInfoRequest } from '../types';
 
 // Middleware to verify the JWT token
 export const authenticateToken = (
-  req: Request,
+  req: IGetUserAuthInfoRequest,
   res: Response,
   next: NextFunction,
 ) => {

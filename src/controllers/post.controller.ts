@@ -1,9 +1,17 @@
 import { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
+import { PostModel } from '../model/post.model';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { IGetUserAuthInfoRequest } from '../types';
 
 export const getPosts = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
-    res.json('TBD');
+    const posts = await PostModel.find().populate('user').populate('bookmarks');
+
+    res.status(StatusCodes.OK).json({
+      statusMessage: ReasonPhrases.OK,
+      posts,
+    });
     return;
   },
 );
@@ -16,8 +24,22 @@ export const getPost = asyncHandler(
 );
 
 export const createPost = asyncHandler(
-  async (req: Request, res: Response): Promise<void> => {
-    res.json('TBD');
+  async (req: IGetUserAuthInfoRequest, res: Response): Promise<void> => {
+    const { content, imageURL, publicationType } = req.body;
+    const { userId } = req.currentUser;
+    let post = await new PostModel({
+      content,
+      imageURL,
+      publicationType,
+      user: userId,
+    }).save();
+    post = await PostModel.findById(post._id).populate('user');
+
+    res.status(StatusCodes.OK).json({
+      statusMessage: ReasonPhrases.OK,
+      message: 'The post has been created',
+      post,
+    });
     return;
   },
 );

@@ -12,6 +12,7 @@ export interface Post extends Document {
   user: Schema.Types.ObjectId;
   imageURL: string | null;
   publicationType: PublicationType;
+  bookmarks: Schema.Types.ObjectId[];
 }
 
 const postSchema = new Schema<Post>(
@@ -42,6 +43,12 @@ const postSchema = new Schema<Post>(
       enum: Object.values(PublicationType),
       default: PublicationType.Public,
     },
+    bookmarks: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Bookmark',
+      },
+    ],
   },
   { timestamps: true },
 );
