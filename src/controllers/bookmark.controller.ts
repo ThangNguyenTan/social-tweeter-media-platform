@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import asyncHandler from 'express-async-handler';
-import BookmarkModel from '../model/bookmark.model';
+import BookmarkModel, { BookmarkDocument } from '../model/bookmark.model';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { IGetUserAuthInfoRequest } from '../types';
 import { PostModel } from '../model/post.model';
@@ -79,6 +79,15 @@ export const deleteBookmark = asyncHandler(
       .populate('post');
 
     if (existingBookmark) {
+      const postId = existingBookmark.post;
+      const existingPost = await PostModel.findById(postId);
+      const existingPostBookmarks = existingPost.bookmarks.filter(
+        (bookmark: BookmarkDocument) => bookmark._id != bookmarkId,
+      );
+      await PostModel.findByIdAndUpdate(postId, {
+        bookmarks: existingPostBookmarks,
+      });
+
       res.status(StatusCodes.OK).json({
         statusMessage: ReasonPhrases.OK,
         message: 'The bookmark has been removed',

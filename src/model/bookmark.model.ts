@@ -1,6 +1,6 @@
 import { Document, Schema, model } from 'mongoose';
 
-interface BookmarkDocument extends Document {
+export interface BookmarkDocument extends Document {
   user: Schema.Types.ObjectId;
   post: Schema.Types.ObjectId;
   createdAt: Date;

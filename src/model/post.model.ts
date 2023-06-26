@@ -1,4 +1,5 @@
 import { Document, Schema, model } from 'mongoose';
+import { BookmarkDocument } from './bookmark.model';
 
 enum PublicationType {
   Public = 'public',
@@ -12,7 +13,7 @@ export interface Post extends Document {
   user: Schema.Types.ObjectId;
   imageURL: string | null;
   publicationType: PublicationType;
-  bookmarks: Schema.Types.ObjectId[];
+  bookmarks: BookmarkDocument[];
 }
 
 const postSchema = new Schema<Post>(
