@@ -10,12 +10,14 @@ import rateLimit from 'express-rate-limit';
 
 import apiRoutes from './routes/api.route';
 import './config/passport.config';
+import { errorHandler } from './middlewares/error.middleware';
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
 
+// Database
 mongoose
   .connect(process.env.MONGODB_URI || '', {
     useNewUrlParser: true,
@@ -53,3 +55,6 @@ app.use(express.json());
 
 // Routes
 app.use('/api', apiRoutes);
+
+// Error Handler
+app.use(errorHandler);

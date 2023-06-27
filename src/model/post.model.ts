@@ -1,5 +1,6 @@
 import { Document, Schema, model } from 'mongoose';
 import { BookmarkDocument } from './bookmark.model';
+import { LikeDocument } from './like.model';
 
 enum PublicationType {
   Public = 'public',
@@ -14,6 +15,7 @@ export interface Post extends Document {
   imageURL: string | null;
   publicationType: PublicationType;
   bookmarks: BookmarkDocument[];
+  likes: LikeDocument[];
 }
 
 const postSchema = new Schema<Post>(
@@ -48,6 +50,12 @@ const postSchema = new Schema<Post>(
       {
         type: Schema.Types.ObjectId,
         ref: 'Bookmark',
+      },
+    ],
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Like',
       },
     ],
   },

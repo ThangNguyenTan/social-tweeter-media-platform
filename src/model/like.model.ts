@@ -1,6 +1,6 @@
 import { Document, Schema, model } from 'mongoose';
 
-interface LikeDocument extends Document {
+export interface LikeDocument extends Document {
   user: Schema.Types.ObjectId;
   post: Schema.Types.ObjectId;
   createdAt: Date;

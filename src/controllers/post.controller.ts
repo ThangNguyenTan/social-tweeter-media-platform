@@ -6,7 +6,10 @@ import { IGetUserAuthInfoRequest } from '../types';
 
 export const getPosts = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
-    const posts = await PostModel.find().populate('user').populate('bookmarks');
+    const posts = await PostModel.find()
+      .populate('user')
+      .populate('bookmarks')
+      .populate('likes');
 
     res.status(StatusCodes.OK).json({
       statusMessage: ReasonPhrases.OK,
