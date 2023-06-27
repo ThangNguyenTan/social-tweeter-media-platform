@@ -9,7 +9,8 @@ export const getPosts = asyncHandler(
     const posts = await PostModel.find()
       .populate('user')
       .populate('bookmarks')
-      .populate('likes');
+      .populate('likes')
+      .populate('retweets');
 
     res.status(StatusCodes.OK).json({
       statusMessage: ReasonPhrases.OK,

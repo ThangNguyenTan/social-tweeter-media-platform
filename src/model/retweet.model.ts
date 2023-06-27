@@ -1,13 +1,13 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface IRetweet extends Document {
+export interface RetweetDocument extends Document {
   user: Schema.Types.ObjectId;
   post: Schema.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
 
-const RetweetSchema: Schema<IRetweet> = new Schema<IRetweet>(
+const RetweetSchema: Schema<RetweetDocument> = new Schema<RetweetDocument>(
   {
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     post: { type: Schema.Types.ObjectId, ref: 'Post', required: true },
@@ -23,6 +23,6 @@ const RetweetSchema: Schema<IRetweet> = new Schema<IRetweet>(
   { timestamps: true },
 );
 
-const Retweet = mongoose.model<IRetweet>('Retweet', RetweetSchema);
+const RetweetModel = mongoose.model<RetweetDocument>('Retweet', RetweetSchema);
 
-export default Retweet;
+export default RetweetModel;
