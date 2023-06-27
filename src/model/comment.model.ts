@@ -1,9 +1,9 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 // Define the Comment interface
-interface Comment extends Document {
+export interface CommentDocument extends Document {
   comment: string;
-  image?: string;
+  imageURL?: string;
   createdAt: Date;
   updatedAt: Date;
   post: mongoose.Types.ObjectId;
@@ -11,13 +11,13 @@ interface Comment extends Document {
 }
 
 // Define the Comment schema
-const commentSchema = new Schema<Comment>(
+const commentSchema = new Schema<CommentDocument>(
   {
     comment: {
       type: String,
       required: true,
     },
-    image: {
+    imageURL: {
       type: String,
       default: null,
     },
@@ -46,6 +46,6 @@ const commentSchema = new Schema<Comment>(
 );
 
 // Create the Comment model
-const CommentModel = mongoose.model<Comment>('Comment', commentSchema);
+const CommentModel = mongoose.model<CommentDocument>('Comment', commentSchema);
 
 export default CommentModel;

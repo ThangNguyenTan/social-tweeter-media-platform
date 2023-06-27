@@ -10,7 +10,8 @@ export const getPosts = asyncHandler(
       .populate('user')
       .populate('bookmarks')
       .populate('likes')
-      .populate('retweets');
+      .populate('retweets')
+      .populate('comments');
 
     res.status(StatusCodes.OK).json({
       statusMessage: ReasonPhrases.OK,

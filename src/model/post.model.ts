@@ -2,6 +2,7 @@ import { Document, Schema, model } from 'mongoose';
 import { BookmarkDocument } from './bookmark.model';
 import { LikeDocument } from './like.model';
 import { RetweetDocument } from './retweet.model';
+import { CommentDocument } from './comment.model';
 
 enum PublicationType {
   Public = 'public',
@@ -18,6 +19,7 @@ export interface Post extends Document {
   bookmarks: BookmarkDocument[];
   likes: LikeDocument[];
   retweets: RetweetDocument[];
+  comments: CommentDocument[];
 }
 
 const postSchema = new Schema<Post>(
@@ -64,6 +66,12 @@ const postSchema = new Schema<Post>(
       {
         type: Schema.Types.ObjectId,
         ref: 'Retweet',
+      },
+    ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment',
       },
     ],
   },

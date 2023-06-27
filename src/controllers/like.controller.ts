@@ -52,6 +52,15 @@ export const likePost = asyncHandler(
       .populate('user')
       .populate('post');
     const existingPost = await PostModel.findById(postId);
+
+    if (!existingPost) {
+      res.status(StatusCodes.NOT_FOUND).json({
+        statusMessage: ReasonPhrases.NOT_FOUND,
+        message: 'The post does not exist',
+      });
+      return;
+    }
+
     const existingPostLikes = [...existingPost.likes, newLikeId];
     await PostModel.findByIdAndUpdate(postId, {
       likes: existingPostLikes,
