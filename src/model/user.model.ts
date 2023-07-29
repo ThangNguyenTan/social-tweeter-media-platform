@@ -1,4 +1,5 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
+import { FollowDocument } from './follow.model';
 
 export interface UserDocument extends Document {
   username: string;
@@ -9,6 +10,8 @@ export interface UserDocument extends Document {
   email?: string;
   googleId?: string;
   githubId?: string;
+  followers: FollowDocument[];
+  following: FollowDocument[];
 }
 
 const userSchema = new mongoose.Schema<UserDocument>({
@@ -26,6 +29,18 @@ const userSchema = new mongoose.Schema<UserDocument>({
   password: { type: String },
   googleId: { type: String },
   githubId: { type: String },
+  followers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Follow',
+    },
+  ],
+  following: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Follow',
+    },
+  ],
 });
 
 const User = mongoose.model<UserDocument>('User', userSchema);

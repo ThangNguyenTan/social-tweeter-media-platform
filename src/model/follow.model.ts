@@ -1,6 +1,6 @@
 import { Document, Schema, model } from 'mongoose';
 
-interface FollowDocument extends Document {
+export interface FollowDocument extends Document {
   follower: Schema.Types.ObjectId;
   followed: Schema.Types.ObjectId;
   createdAt: Date;
