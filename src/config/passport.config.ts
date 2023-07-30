@@ -9,21 +9,24 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      const user = await User.findOne({ username });
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username' });
+  new LocalStrategy(
+    { usernameField: 'email' },
+    async (email, password, done) => {
+      try {
+        const user = await User.findOne({ email });
+        if (!user) {
+          return done({ message: 'Incorrect username' }, false);
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+          return done({ message: 'Incorrect password' }, false);
+        }
+        return done(null, user);
+      } catch (error) {
+        return done(error);
       }
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-        return done(null, false, { message: 'Incorrect password' });
-      }
-      return done(null, user);
-    } catch (error) {
-      return done(error);
-    }
-  }),
+    },
+  ),
 );
 
 passport.use(
